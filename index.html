@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Tab Communication Test</title>
+    <script>
+        // Function to send a message to the Android app
+        function sendMessageToAndroid() {
+            // Check if the Android interface exists
+            if (window.AndroidInterface) {
+                window.AndroidInterface.postMessage("Hello from the web page!");
+                console.log("Message sent to Android.");
+            } else {
+                console.log("AndroidInterface is not available. Make sure the app is correctly integrated with Custom Tabs.");
+            }
+        }
+
+        // Listen for messages sent from Android to the web page (if needed)
+        window.addEventListener("message", function(event) {
+            // Optionally verify event origin (e.g., check for a trusted origin)
+            if (event.origin !== "your-trusted-origin") {
+                return;
+            }
+
+            var message = event.data;
+            console.log("Message received from Android:", message);
+
+            // You can add further handling for the message if needed
+            if (message === "someMessage") {
+                alert("Received a special message from Android!");
+            }
+        });
+
+        // Simulate sending a message to Android when the page loads
+        window.onload = function() {
+            sendMessageToAndroid();
+        };
+    </script>
+</head>
+<body>
+    <h1>Custom Tabs Test</h1>
+    <button onclick="sendMessageToAndroid()">Send Message to Android</button>
+    <p>Open your Android app and observe the behavior when you click the button.</p>
+</body>
+</html>
